@@ -36,14 +36,14 @@ pipeline {
                }
             }			
         }
-        stage('package/build-war') {
+        stage('Build Docker Image') {
 	         steps {
                 // step5
                 echo 'package......'
 		            sh script: '/opt/maven/bin/mvn package'	
            }		
         }
-        stage('build & push docker image') {
+        stage('Push Docker Image') {
 	         steps {
               withDockerRegistry(credentialsId: 'DOCKER_HUB_LOGIN', url: 'https://index.docker.io/v1/') {
                     sh script: 'cd  $WORKSPACE'
@@ -52,7 +52,7 @@ pipeline {
               }	
            }		
         }
-    stage('Deploy-App-QA') {
+    stage('DeployToProduction') {
   	   steps {
               sh 'ansible-playbook --inventory /tmp/inv $WORKSPACE/deploy/deploy-kube.yml --extra-vars "env=qa build=$BUILD_NUMBER"'
 	   }
