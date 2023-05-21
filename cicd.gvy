@@ -8,7 +8,7 @@ pipeline {
 	         steps {
                 // step1 
                 echo 'compiling..'
-		            git url: 'https://github.com/lernwithshubh/PetClinic'
+		            git url: 'https://github.com/discipleofpeace/PetClinic'
 		            sh script: '/opt/maven/bin/mvn compile'
            }
         }
@@ -45,7 +45,7 @@ pipeline {
         }
         stage('Push Docker Image') {
 	         steps {
-              withDockerRegistry(credentialsId: 'DOCKER_HUB_LOGIN', url: 'https://index.docker.io/v1/') {
+              withDockerRegistry(credentialsId: 'docker_hub_login', url: 'https://index.docker.io/v1/') {
                     sh script: 'cd  $WORKSPACE'
                     sh script: 'docker build --file Dockerfile --tag docker.io/08170007/petclinic:$BUILD_NUMBER .'
                     sh script: 'docker push docker.io/08170007/petclinic:$BUILD_NUMBER'
