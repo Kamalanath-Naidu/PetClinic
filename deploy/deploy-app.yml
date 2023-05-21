@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: petclinic
-        image: lerndevops/petclinic:bno
+        image: discipleofpeace/petclinic:bno
         ports:
         - name: http
           containerPort: 8080
